@@ -1,0 +1,26 @@
+{% extends "quotes/base.html" %}
+
+{% block content %}
+
+<h1>Цитати користувачів</h1>
+
+{% for quote in user_quotes %}
+<div class="quote" itemscope itemtype="http://schema.org/CreativeWork">
+    <span class="text" itemprop="text">“{{ quote.text }}”</span>
+    <span>by <small class="author" itemprop="author">{{ quote.author.name }}</small>
+    <a href="{% url 'content:author_details_user' quote.author.id %}" previewlistener="true">(about)</a>
+    </span>
+    <div class="tags">
+        Tags:
+        <meta class="keywords" itemprop="keywords" content="{{ quote.keywords|join:',' }}"> 
+
+        {% for keyword in quote.keywords %}
+            <a class="tag" href="{% url 'keyword_detail' keyword %}" previewlistener="true">{{ keyword }}</a>
+        {% endfor %}
+    </div>
+</div>
+{% empty %}
+    <p>Цитати відсутні.</p>
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,92 @@
+{% extends 'quotes/base.html' %}
+{% load extract %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-8">
+    {% for quote in quotes %}
+    <div class="quote" itemscope="" itemtype="http://schema.org/CreativeWork">
+        <span class="text" itemprop="text">
+            {{quote.quote}}
+        </span>
+        <span>by <small class="author" itemprop="author">{{quote.author|author}}</small>
+        <a href="/author/{{quote.author}}" previewlistener="true">(about)</a>
+        </span>
+        <div class="keywords">
+            Keywords:
+            {% for keyword in quote.keywords %}
+            <a class="keyword" href="/keyword/{{keyword}}" previewlistener="true">{{keyword}}</a>
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+    <nav>
+        <ul class="pager">
+            
+            <li class="previous">
+                <a class="{% if not quotes.has_previous %} disabled {% endif %}"
+                   href="{% if quotes.has_previous %} {% url 'quotes:root_paginate' quotes.previous_page_number %} {% else %} # {% endif %}" previewlistener="true">
+                    <span aria-hidden="true">←</span> Previous
+                </a>
+            </li>
+            
+            
+            <li class="next">
+                <a class="{% if not quotes.has_next %} disabled {% endif %}"
+                   href="{% if quotes.has_next %} {% url 'quotes:root_paginate' quotes.next_page_number %} {% else %} # {% endif %}" previewlistener="true">
+                    Next <span aria-hidden="true">→</span></a>
+            </li>
+            
+        </ul>
+    </nav>
+    </div>
+    <div class="col-md-4 tags-box">
+        
+            <h2>Top Ten keywords</h2>
+            
+            <span class="keyword-item">
+            <a class="keyword" style="font-size: 28px" href="/keyword/love/" previewlistener="true">love</a>
+            </span>
+            
+            <span class="keyword-item">
+            <a class="keyword" style="font-size: 26px" href="/keyword/inspirational/" previewlistener="true">inspirational</a>
+            </span>
+            
+            <span class="keyword-item">
+            <a class="keyword" style="font-size: 26px" href="/keyword/life/" previewlistener="true">life</a>
+            </span>
+            
+            <span class="keyword-item">
+            <a class="keyword" style="font-size: 24px" href="/keyword/humor/" previewlistener="true">humor</a>
+            </span>
+            
+            <span class="keyword-item">
+            <a class="keyword" style="font-size: 22px" href="/keyword/books/" previewlistener="true">books</a>
+            </span>
+            
+            <span class="keyword-item">
+            <a class="keyword" style="font-size: 14px" href="/keyword/reading/" previewlistener="true">reading</a>
+            </span>
+            
+            <span class="keyword-item">
+            <a class="keyword" style="font-size: 10px" href="/keyword/friendship/" previewlistener="true">friendship</a>
+            </span>
+            
+            <span class="keyword-item">
+            <a class="keyword" style="font-size: 8px" href="/keyword/friends/" previewlistener="true">friends</a>
+            </span>
+            
+            <span class="keyword-item">
+            <a class="keyword" style="font-size: 8px" href="/keyword/truth/" previewlistener="true">truth</a>
+            </span>
+            
+            <span class="keyword-item">
+            <a class="keyword" style="font-size: 6px" href="/keyword/simile/" previewlistener="true">simile</a>
+            </span>
+            
+        </div>
+    </div>
+</div>
+
+{% endblock %}
